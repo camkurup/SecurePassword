@@ -1,21 +1,22 @@
 ﻿using System.Text;
 
-SecurePassword.SafePassword safePassword = new SecurePassword.SafePassword();
-SecurePassword.GetPassword getPassword= new SecurePassword.GetPassword();
 SecurePassword.Dal dal = new SecurePassword.Dal();
+SecurePassword.Logic logic = new SecurePassword.Logic();
 
 //CreateUser -- Start
 Console.WriteLine("input username: ");
-var userName = Console.ReadLine();
-Console.WriteLine("input password: ");
-var password = Console.ReadLine();
+var CreateUserName = Console.ReadLine();
+Console.WriteLine("input createPassword: ");
+var createPassword = Console.ReadLine();
 
-var salt = safePassword.GenerateSalt(password);
-var hashed = safePassword.HashPasswordWithSalt(
-    Encoding.UTF8.GetBytes(password),
+var salt = logic.GenerateSalt(createPassword);
+var hashed = logic.HashPasswordWithSalt(
+    Encoding.UTF8.GetBytes(createPassword),
     salt);
-dal.CreateUser(userName, salt, hashed);
+dal.CreateUser(CreateUserName, salt, hashed);
 //CreateUser -- End
+
+
 
 
 

@@ -25,9 +25,9 @@ namespace SecurePassword
             con.Close();
         }
 
-        public void FindUser(string userName, byte[] salt, byte[] hashed)
+        public void FindUser(string userName)
         {
-            var stm = $"";
+            var stm = $"SELECT * FROM Users WHERE UserName like '{userName}'";
 
             using var con = new SqlConnection(GetConnectionString());
             con.Open();
