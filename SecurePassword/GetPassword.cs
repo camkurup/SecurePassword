@@ -8,12 +8,14 @@ namespace SecurePassword
 {
     internal class GetPassword
     {
-        public string GetSalt()
+
+
+        public string GetSalt(string userName)
         {
             return "";
         }
 
-        public string GetHash()
+        public string GetHash(string userName)
         {
             return "";
         }
