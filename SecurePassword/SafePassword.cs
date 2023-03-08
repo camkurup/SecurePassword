@@ -8,9 +8,10 @@ namespace SecurePassword
 {
     internal class SafePassword
     {
-        public string GenerateSalt()
+        public string GenerateSalt(string userName)
         {
-            return "";
+            var userInput = Console.ReadLine();
+            return userInput;
         }
 
         public string AddSalt()
