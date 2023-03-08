@@ -11,11 +11,23 @@ namespace SecurePassword
             return connectionString;
         }
 
-        public void FindUser(string userName, byte[] salt, byte[] hashed)
+        public void CreateUser(string userName, byte[] salt, byte[] hashed)
         {
             //with the single plings I protected my code from sql injection
             //Insert statement
             var stm = $"INSERT INTO Users VALUES ('{userName}', '{Convert.ToBase64String(salt)}', '{Convert.ToBase64String(hashed)}')";
+
+            using var con = new SqlConnection(GetConnectionString());
+            con.Open();
+
+            using var cmd = new SqlCommand(stm, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void FindUser(string userName, byte[] salt, byte[] hashed)
+        {
+            var stm = $"";
 
             using var con = new SqlConnection(GetConnectionString());
             con.Open();
