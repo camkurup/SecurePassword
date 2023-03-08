@@ -8,8 +8,6 @@ namespace SecurePassword
 {
     internal class GetPassword
     {
-
-
         public string GetSalt(string userName)
         {
             return "";
@@ -23,6 +21,11 @@ namespace SecurePassword
         public string AddSaltToPassword(string salt, string password)
         {
             return salt + password;
+        }
+
+        public bool CompareInputAndDB(string userName )
+        {
+            return false;
         }
     }
 }
