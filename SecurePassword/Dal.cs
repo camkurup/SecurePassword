@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace SecurePassword
 {
@@ -11,13 +6,23 @@ namespace SecurePassword
     {
         public string GetConnectionString()
         {
-            string con = "Server=localhost;Database=SecurePassword;Trusted_Connection=True";
-            return con;
+            string connectionString = @"Server=localhost;Database=SecurePassword;Trusted_Connection=True;";
+
+            return connectionString;
         }
 
-        public void FindUser()
+        public void FindUser(string userName, byte[] salt, byte[] hashed)
         {
-            string sqlString = "";
+            //with the single plings I protected my code from sql injection
+            //Insert statement
+            var stm = $"INSERT INTO Users VALUES ('{userName}', '{Convert.ToBase64String(salt)}', '{Convert.ToBase64String(hashed)}')";
+
+            using var con = new SqlConnection(GetConnectionString());
+            con.Open();
+
+            using var cmd = new SqlCommand(stm, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
     }
 }
