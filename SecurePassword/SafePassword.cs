@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,31 +9,33 @@ namespace SecurePassword
 {
     internal class SafePassword
     {
-        private static Random random = new Random();
-
-        public void createPassword()
+        public byte[] GenerateSalt(string input)
         {
-            Console.WriteLine("Input Password: ");
-            string password = Console.ReadLine();
+            const int saltLength = 32;
 
+            using (var randomSaltGenerator = new RNGCryptoServiceProvider())
+            {
+                var salt = new byte[saltLength];
+                randomSaltGenerator.GetBytes(salt);
+
+                return salt;
+            }
         }
-
-        public void createPassword(string password) { }
-        public string GenerateSalt(int length)
+        private byte[] CombinePasswordAndSalt(byte[] passwordArray, byte[] saltArray)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+            var passwordAndSalt = new byte[passwordArray.Length + saltArray.Length];
+
+            Buffer.BlockCopy(passwordArray, 0, passwordAndSalt, 0, passwordArray.Length);
+            Buffer.BlockCopy(saltArray, 0, passwordAndSalt, passwordArray.Length, saltArray.Length);
+
+            return passwordAndSalt;
         }
-
-        public string AddSalt()
+        public byte[] HashPasswordWithSalt(byte[] toBeHashed, byte[] salt)
         {
-            return "";
-        }
-
-        public void SafePasswordInDB()
-        {
-            
+            using (var sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(CombinePasswordAndSalt(toBeHashed, salt));
+            }
         }
     }
 }
