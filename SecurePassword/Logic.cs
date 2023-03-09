@@ -33,11 +33,10 @@ namespace SecurePassword
             }
         }
 
-        public bool CompareHasshedPasswords(byte[] userInput, byte[] fromDB)
+        public void CompareHasshedPasswords(byte[] userInput, byte[] fromDB)
         {
-            if (userInput == fromDB) { return true; }
 
-            else return false;
+
 
         }
     }

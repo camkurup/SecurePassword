@@ -16,7 +16,13 @@ var hashed = logic.HashPasswordWithSalt(
 dal.CreateUser(CreateUserName, salt, hashed);
 //CreateUser -- End
 
+//Login -- Start
+Console.WriteLine("input username: ");
+var inputUserName = Console.ReadLine();
+Console.WriteLine("input createPassword: ");
+var inputPassword = Console.ReadLine();
 
+//Login -- End
 
 
 
