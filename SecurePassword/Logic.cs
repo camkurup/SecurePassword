@@ -33,10 +33,16 @@ namespace SecurePassword
             }
         }
 
-        public void CompareHasshedPasswords(byte[] userName, byte[] password)
+         
+        public void CompareHasshedPasswords(byte[] userName, byte[] salt, byte[] password)
         {
+            Dal dal = new Dal();
+            Console.WriteLine("input username: ");
+            var inputUserName = Console.ReadLine();
+            Console.WriteLine("input Password: ");
+            var inputPassword = Console.ReadLine();
 
-
+            //userName = dal.FindUserByUserName(inputUserName);
 
         }
     }
