@@ -33,7 +33,7 @@ namespace SecurePassword
             }
         }
 
-        public void CompareHasshedPasswords(byte[] userInput, byte[] fromDB)
+        public void CompareHasshedPasswords(byte[] userName, byte[] password)
         {
 
 

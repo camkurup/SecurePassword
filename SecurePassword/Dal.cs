@@ -25,7 +25,7 @@ namespace SecurePassword
             con.Close();
         }
 
-        public void FindUser(string userName)
+        public void FindUserByUserName(string userName)
         {
             var stm = $"SELECT * FROM Users WHERE UserName like '{userName}'";
 
@@ -34,7 +34,18 @@ namespace SecurePassword
 
             using var cmd = new SqlCommand(stm, con);
             cmd.ExecuteNonQuery();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            UserModel userModel = new UserModel();
+            while (reader.Read())
+            {
+                userModel.UserName = reader["UserName"].ToString();
+                userModel.Salt = reader["Salt"].ToString();
+                userModel.HashedPassword = reader["HashedPassword"].ToString();
+            }
+
             con.Close();
+            Console.WriteLine(userModel.UserName); 
         }
     }
 }
